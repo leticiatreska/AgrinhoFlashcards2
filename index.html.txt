@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoFlash Quiz</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<header>
+
+<div>
+<h1>🌿 EcoFlash</h1>
+<p>Quiz sobre Sustentabilidade e Meio Ambiente</p>
+</div>
+
+</header>
+
+<section class="dashboard">
+
+<div class="stat-card">
+<h3>Questão</h3>
+<span id="questionCounter">1/6</span>
+</div>
+
+<div class="stat-card">
+<h3>Acertos</h3>
+<span id="score">0</span>
+</div>
+
+</section>
+
+<section class="progress-section">
+
+<div class="progress-bar">
+<div class="progress-fill" id="progressFill"></div>
+</div>
+
+</section>
+
+<main class="quiz-container">
+
+<div class="quiz-card">
+
+<h2 id="question"></h2>
+
+<div id="answers"></div>
+
+<div id="feedback"></div>
+
+<button id="nextBtn" disabled>
+Próxima Pergunta →
+</button>
+
+</div>
+
+<div id="result" class="hidden"></div>
+
+</main>
+
+<footer>
+🌎 Educação Ambiental para um futuro sustentável
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>

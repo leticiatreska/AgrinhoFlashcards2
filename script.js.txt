@@ -1,0 +1,214 @@
+const questions = [
+
+{
+question:"O que é sustentabilidade?",
+answers:[
+"Usar recursos naturais sem limites.",
+"Atender às necessidades atuais sem comprometer as futuras gerações.",
+"Produzir mais resíduos para aumentar o consumo.",
+"Explorar todos os recursos disponíveis."
+],
+correct:1
+},
+
+{
+question:"Qual atitude ajuda a preservar o meio ambiente?",
+answers:[
+"Jogar lixo em terrenos baldios.",
+"Desperdiçar água ao escovar os dentes.",
+"Separar materiais recicláveis para coleta seletiva.",
+"Queimar lixo doméstico."
+],
+correct:2
+},
+
+{
+question:"Qual é uma fonte de energia renovável?",
+answers:[
+"Petróleo.",
+"Carvão mineral.",
+"Energia solar.",
+"Gás natural."
+],
+correct:2
+},
+
+{
+question:"Qual dos materiais abaixo é comumente reciclado na coleta seletiva?",
+answers:[
+"Vidro.",
+"Restos de comida.",
+"Papel higiênico usado.",
+"Guardanapo engordurado."
+],
+correct:0
+},
+
+{
+question:"Qual é o principal objetivo da coleta seletiva?",
+answers:[
+"Misturar todos os resíduos.",
+"Facilitar a reciclagem dos materiais.",
+"Aumentar a quantidade de lixo.",
+"Eliminar a necessidade de aterros sanitários."
+],
+correct:1
+},
+
+{
+question:"Como o uso de transporte coletivo contribui para a sustentabilidade?",
+answers:[
+"Aumenta a emissão de poluentes.",
+"Consome mais combustível por pessoa.",
+"Reduz a quantidade de veículos nas ruas e a poluição.",
+"Não gera nenhum benefício ambiental."
+],
+correct:2
+}
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+const questionEl = document.getElementById("question");
+const answersEl = document.getElementById("answers");
+const nextBtn = document.getElementById("nextBtn");
+const feedbackEl = document.getElementById("feedback");
+const scoreEl = document.getElementById("score");
+const counterEl = document.getElementById("questionCounter");
+const progressFill = document.getElementById("progressFill");
+const resultEl = document.getElementById("result");
+
+loadQuestion();
+
+function loadQuestion(){
+
+const q = questions[currentQuestion];
+
+questionEl.textContent = q.question;
+
+counterEl.textContent =
+`${currentQuestion + 1}/${questions.length}`;
+
+progressFill.style.width =
+`${(currentQuestion/questions.length)*100}%`;
+
+answersEl.innerHTML = "";
+feedbackEl.innerHTML = "";
+
+nextBtn.disabled = true;
+
+q.answers.forEach((answer,index)=>{
+
+const button =
+document.createElement("button");
+
+button.classList.add("answer");
+
+button.textContent = answer;
+
+button.addEventListener("click",()=>{
+checkAnswer(index);
+});
+
+answersEl.appendChild(button);
+
+});
+
+}
+
+function checkAnswer(selected){
+
+const q = questions[currentQuestion];
+
+const buttons =
+document.querySelectorAll(".answer");
+
+buttons.forEach(btn=>{
+btn.disabled = true;
+});
+
+buttons[q.correct]
+.classList.add("correct");
+
+if(selected === q.correct){
+
+score++;
+
+scoreEl.textContent = score;
+
+feedbackEl.innerHTML =
+"✅ Resposta correta!";
+
+}else{
+
+buttons[selected]
+.classList.add("wrong");
+
+feedbackEl.innerHTML =
+"❌ Resposta incorreta!";
+}
+
+nextBtn.disabled = false;
+}
+
+nextBtn.addEventListener("click",()=>{
+
+currentQuestion++;
+
+if(currentQuestion < questions.length){
+
+loadQuestion();
+
+}else{
+
+showResult();
+
+}
+
+});
+
+function showResult(){
+
+document.querySelector(".quiz-card")
+.classList.add("hidden");
+
+resultEl.classList.remove("hidden");
+
+const percentage =
+Math.round((score/questions.length)*100);
+
+resultEl.innerHTML = `
+<h2>🎉 Quiz Concluído!</h2>
+
+<h3>${score} de ${questions.length} acertos</h3>
+
+<p style="margin-top:15px">
+Aproveitamento: ${percentage}%
+</p>
+
+<button class="restart-btn" onclick="restartQuiz()">
+🔄 Recomeçar Quiz
+</button>
+`;
+
+progressFill.style.width = "100%";
+}
+
+function restartQuiz(){
+
+currentQuestion = 0;
+score = 0;
+
+scoreEl.textContent = "0";
+
+document
+.querySelector(".quiz-card")
+.classList.remove("hidden");
+
+resultEl.classList.add("hidden");
+
+loadQuestion();
+
+}
